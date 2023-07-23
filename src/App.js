@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import { Fragment, useState } from 'react';
 import './App.css';
 
 const initialFriends = [
@@ -23,12 +23,19 @@ const initialFriends = [
 ];
 
 function App() {
+
+  const [showAddFriend, setShowAddFriend] = useState(false);
+
+  const handleShowAddFriend = () => {
+    setShowAddFriend(show => !show);
+  }
+
   return (
     <div className='app'>
       <div className='sidebar'>
         <FriendsList />
-        <FormAddFriend />
-        <Button>Add friend</Button>
+        {showAddFriend && <FormAddFriend />}
+        <Button onClick={handleShowAddFriend}>{showAddFriend ? 'Close' : 'Add friend'}</Button>
       </div>
       <FormSplitBill />
     </div>
@@ -75,9 +82,9 @@ const Friend = ({friend}) => {
   )
 };
 
-const Button = ({children}) => {
+const Button = ({children, onClick}) => {
   return (
-    <button className='button'>{children}</button>
+    <button onClick={onClick} className='button'>{children}</button>
   );
 }
 
